@@ -1,0 +1,17 @@
+{
+  "name": "b4x-marketplace",
+  "owner": {
+    "name": "Jiří Szopa",
+    "url": "https://github.com/Jerryk133"
+  },
+  "description": "Marketplace hosting the B4X development skill for Claude Code.",
+  "plugins": [
+    {
+      "name": "b4x",
+      "source": "./",
+      "description": "B4X (B4A/B4J/B4i) development skill: B4XPages, XUI, SQLite, resumable subs, custom views.",
+      "category": "development",
+      "keywords": ["b4x", "b4a", "b4j", "b4i", "b4xpages", "xui", "android", "sqlite"]
+    }
+  ]
+}

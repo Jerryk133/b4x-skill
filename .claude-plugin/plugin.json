@@ -1,0 +1,13 @@
+{
+  "name": "b4x",
+  "description": "B4X (B4A for Android, B4J for desktop/server, B4i for iOS) development patterns: B4XPages, XUI, SQLite, JSON, resumable subs, runtime permissions, custom views and b4xlib.",
+  "version": "1.0.0",
+  "author": {
+    "name": "Jiří Szopa",
+    "url": "https://github.com/Jerryk133"
+  },
+  "homepage": "https://github.com/Jerryk133/b4x-skill",
+  "repository": "https://github.com/Jerryk133/b4x-skill",
+  "license": "MIT",
+  "keywords": ["b4x", "b4a", "b4j", "b4i", "b4xpages", "xui", "android", "sqlite", "b4xlib"]
+}
