@@ -17,6 +17,13 @@ interface is what it tells you about B4X, not how its own files are arranged.
 
 ## [Unreleased]
 
+### Added
+
+- `scripts/validate.mjs` now fails if `skills/` contains a skill it does not
+  cover. Its checks are hardcoded to one skill, so a second one would have been
+  ignored while the run still reported success — health it never measured. The
+  guard forces the script to be generalised at that point instead.
+
 ## [1.1.0] — 2026-07-30
 
 ### Added

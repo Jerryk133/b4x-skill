@@ -10,13 +10,19 @@
 //   5. plugin.json / marketplace.json shape
 //   6. CHANGELOG          - the released version has an entry
 //   7. README             - reference list matches the files on disk
+//   8. coverage           - no skill in skills/ is silently left unchecked
 
 import { readFileSync, readdirSync, existsSync, statSync } from "node:fs";
 import { join, dirname, basename } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
-const SKILL_DIR = join(ROOT, "skills", "b4x");
+
+// This validator is written for a single skill. Everything below assumes one
+// SKILL.md routing to one references/ directory; see checkCoverage.
+const VALIDATED_SKILLS = ["b4x"];
+
+const SKILL_DIR = join(ROOT, "skills", VALIDATED_SKILLS[0]);
 const REF_DIR = join(SKILL_DIR, "references");
 
 const errors = [];
@@ -270,6 +276,36 @@ function checkReadme(refs) {
       fail("README.md", `mentions \`${f}\`, which no longer exists`);
 }
 
+// ---------------------------------------------------------------------- coverage
+
+// A validator that silently passes is worse than none, because it reports health
+// it never measured. The checks above are hardcoded to VALIDATED_SKILLS, so a
+// second skill would be ignored while the run still exited 0. Refuse to do that:
+// either the skill is covered, or the build fails until this script grows to
+// handle it.
+function checkCoverage() {
+  const skillsRoot = join(ROOT, "skills");
+  if (!existsSync(skillsRoot)) {
+    fail("skills", "directory is missing");
+    return;
+  }
+  const found = readdirSync(skillsRoot).filter((e) =>
+    statSync(join(skillsRoot, e)).isDirectory(),
+  );
+
+  for (const s of found)
+    if (!VALIDATED_SKILLS.includes(s))
+      fail(
+        `skills/${s}`,
+        "is not covered by this validator - generalise scripts/validate.mjs " +
+          "to loop over skills, then add it to VALIDATED_SKILLS",
+      );
+
+  for (const s of VALIDATED_SKILLS)
+    if (!found.includes(s))
+      fail("scripts/validate.mjs", `VALIDATED_SKILLS names "${s}", which does not exist`);
+}
+
 // ------------------------------------------------------------------------- run
 
 checkFrontmatter();
@@ -280,6 +316,7 @@ if (refs.length) {
   checkReadme(refs);
 }
 checkPackaging();
+checkCoverage();
 
 for (const w of warnings) console.log(`WARN  ${w}`);
 for (const e of errors) console.log(`ERROR ${e}`);
@@ -289,6 +326,7 @@ if (errors.length) {
   process.exit(1);
 }
 console.log(
-  `OK - ${refs.length} reference files, frontmatter and packaging valid` +
+  `OK - ${VALIDATED_SKILLS.length} skill(s), ${refs.length} reference files, ` +
+    `frontmatter and packaging valid` +
     (warnings.length ? ` (${warnings.length} warning(s))` : ""),
 );
