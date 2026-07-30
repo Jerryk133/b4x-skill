@@ -149,6 +149,11 @@ b4x-skill/
 ├── .claude-plugin/
 │   ├── marketplace.json
 │   └── plugin.json
+├── .github/
+│   └── workflows/
+│       └── validate.yml
+├── scripts/
+│   └── validate.mjs
 ├── skills/
 │   └── b4x/
 │       ├── SKILL.md
@@ -191,6 +196,21 @@ Validate the plugin, marketplace catalog, and skill metadata from Claude Code:
 ```text
 /plugin validate .
 ```
+
+The repository also carries its own structural validator, which runs on every push
+and pull request via GitHub Actions and can be run locally (Node 20+, no
+dependencies):
+
+```bash
+node scripts/validate.mjs
+```
+
+It checks `SKILL.md` frontmatter against the Agent Skills specification and, more
+importantly, keeps the progressive-disclosure wiring honest: every `references/`
+file named in `SKILL.md` must exist, every file on disk must be routed to from
+`SKILL.md`, backticked cross-file mentions must resolve, and the README reference
+list must match the files that are actually there. Renaming or deleting a
+reference file without updating its routing fails the build.
 
 After editing plugin files, run:
 
