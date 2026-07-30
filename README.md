@@ -167,6 +167,7 @@ b4x-skill/
 │           ├── platform-b4a.md
 │           ├── platform-b4i.md
 │           └── platform-b4j.md
+├── CHANGELOG.md
 ├── LICENSE
 └── README.md
 ```
@@ -219,7 +220,16 @@ After editing plugin files, run:
 ```
 
 When publishing a new release, update the version in
-`.claude-plugin/plugin.json`.
+`.claude-plugin/plugin.json` and add a matching entry to
+[CHANGELOG.md](CHANGELOG.md). The validator fails if the two disagree, so the
+changelog cannot silently fall behind.
+
+Versions are read as follows. **MAJOR** means guidance reversed or the scope
+changed, so advice you followed before may no longer be recommended. **MINOR**
+means new coverage or checks, with existing guidance intact. **PATCH** means
+corrections and clarifications. Rearranging files inside `references/` is not
+breaking — the skill's interface is what it tells you about B4X, not how its own
+files are laid out.
 
 ## References and credits
 

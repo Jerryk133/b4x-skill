@@ -8,7 +8,8 @@
 //   3. orphans            - every references/*.md is reachable from SKILL.md
 //   4. cross-file links   - bare `foo.md` mentions inside references resolve
 //   5. plugin.json / marketplace.json shape
-//   6. README             - reference list matches the files on disk
+//   6. CHANGELOG          - the released version has an entry
+//   7. README             - reference list matches the files on disk
 
 import { readFileSync, readdirSync, existsSync, statSync } from "node:fs";
 import { join, dirname, basename } from "node:path";
@@ -193,6 +194,30 @@ function readJson(rel) {
   }
 }
 
+// Keeps the release ritual honest: README tells you to bump plugin.json, so the
+// bump must come with a changelog entry rather than silently drifting.
+function checkChangelog(version) {
+  const path = join(ROOT, "CHANGELOG.md");
+  if (!existsSync(path)) {
+    fail("CHANGELOG.md", "file is missing");
+    return;
+  }
+  const text = read(path);
+  const released = [...text.matchAll(/^## \[(\d+\.\d+\.\d+)\]/gm)].map((m) => m[1]);
+
+  if (!version) return;
+  if (!released.includes(version))
+    fail(
+      "CHANGELOG.md",
+      `plugin.json is at ${version} but there is no \`## [${version}]\` entry`,
+    );
+  if (released.length && released[0] !== version)
+    warn(
+      "CHANGELOG.md",
+      `newest entry is ${released[0]} but plugin.json is at ${version}`,
+    );
+}
+
 function checkPackaging() {
   const plugin = readJson(".claude-plugin/plugin.json");
   if (plugin) {
@@ -201,6 +226,7 @@ function checkPackaging() {
       if (!plugin[field]) fail(where, `\`${field}\` is required`);
     if (plugin.version && !/^\d+\.\d+\.\d+(-[\w.]+)?$/.test(plugin.version))
       fail(where, `\`version\` "${plugin.version}" is not semver`);
+    checkChangelog(plugin.version);
   }
 
   const market = readJson(".claude-plugin/marketplace.json");
@@ -232,7 +258,7 @@ function checkReadme(refs) {
     return;
   }
   const text = read(path);
-  const known = new Set([...refs, "README.md", "SKILL.md"]);
+  const known = new Set([...refs, "README.md", "SKILL.md", "changelog.md"]);
 
   for (const f of refs)
     if (!text.includes(f))
