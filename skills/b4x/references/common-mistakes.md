@@ -106,7 +106,32 @@ Nuance the mechanical rules:
   user-facing storage — those have distinct purposes.
 - `B4XView.Text`/`NumberOfViews` etc. aren't meaningful for every underlying view type.
 
-## 11. Version claims from memory
+## 11. Using a feature the user's IDE doesn't have
 
-B4X ships frequent incremental updates. Don't assert "current/latest" from memory —
-check the changelog at b4x.com. See `compatibility.md`.
+Generating a newer idiom for an older IDE is a compile error like any other. These are
+the version-gated things worth knowing; the floor versions are fixed historical facts.
+
+| Feature | Needs | Fallback on older IDEs |
+|---------|-------|------------------------|
+| `Initialized()` / `NotInitialized()` | B4A 13.3+ | `If m <> Null And m.IsInitialized Then` |
+| B4XCollections helpers (`CreateList`, `EmptyList`, `EmptyMap`, `MergeLists`, `MergeMaps`, `CopyOnWriteList`, `CopyOnWriteMap`) internal | B4A 13.3+ | add the B4XCollections library manually, or `Dim l As List : l.Initialize : l.AddAll(...)` |
+| `#Macro` attribute | B4A 13.3+ | — |
+| `List.SubList` | B4A 13.5+ | copy into a new list |
+| Omitting the Starter service **without changing unhandled-exception behaviour**, `Application_Error` in Main | B4A 13.5+ | keep the Starter service and put `Application_Error` there |
+| `WebView.AllowFileAccess` | B4A 13.1+ | — |
+| `#CustomBuildAction` vars (`%PROJECT%`, `%B4X%`, `%JAVABIN%`, `%PROJECT_NAME%`, `%ADDITIONAL%`) | B4A 13.1+ | hardcode the paths |
+| `targetSdkVersion 34` toolchain (needs Java 19) | B4A 13.0+ | — |
+| **B4XPages itself** | B4A 10.0 / B4J 8.50 / B4i 6.80 | legacy Activities (B4A) — but recommend upgrading instead |
+
+When the target version is unknown and a gated feature would materially change the
+answer, ask — or generate the fallback, which compiles everywhere.
+
+**Never state a "current / latest" version from memory.** B4X ships frequent incremental
+updates and any number in this skill's own history has already been wrong once. Check
+b4x.com.
+
+## 12. Presenting a Windows-only build step as universal
+
+The common Shared-Files copy trick — `#CustomBuildAction` invoking `Robocopy` — is
+**Windows-only**. B4J and B4i developers on macOS or Linux need an equivalent shell copy
+(`cp -R`, `rsync`). Don't emit the Robocopy form without saying so.

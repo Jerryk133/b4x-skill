@@ -169,13 +169,17 @@ Note: it is `Sub ... End Sub` with an optional `As <ReturnType>` — there is no
 
 ## Initialized / NotInitialized (current object check)
 
+**Requires B4A 13.3+.** On an older IDE this doesn't compile — use the fallback below.
+
 ```b4x
-' B4X — current (v13.3+) form
+' B4X — current (13.3+) form; also covers the Null case
 If Initialized(map1) Then ...
 If NotInitialized(map1) Then map1.Initialize
 
-' Older, verbose equivalent still seen in old code:
-If map1.IsInitialized Then ...
+' Pre-13.3 fallback. Note the Null guard: calling .IsInitialized on a Null
+' reference throws, so the bare `If map1.IsInitialized` seen in old snippets
+' is not a safe equivalent.
+If map1 <> Null And map1.IsInitialized Then ...
 ```
 
 ## Strings
@@ -274,7 +278,15 @@ Next
 > matters.
 
 `CreateMap(...)` is a core built-in and the idiomatic way to make an initialized map.
-Some builds also offer list/collection helpers (`CreateList`, `EmptyList`, `EmptyMap`,
-`MergeLists`, `CopyOnWriteList`, …) via recent B4XCollections — **verify the exact
-signature against your installed version** before relying on them; the universally safe
-list idiom is `Dim l As List : l.Initialize : l.AddAll(Array As String(...))`.
+
+The list/collection helpers `CreateList`, `EmptyList`, `EmptyMap`, `MergeLists`,
+`MergeMaps`, `CopyOnWriteList`, `CopyOnWriteMap` ship in B4XCollections, which became an
+internal library in **B4A 13.3+**. On older IDEs they need the library added manually or
+aren't available at all. The universally safe list idiom, valid on every version, is:
+
+```b4x
+' B4X
+Dim l As List
+l.Initialize
+l.AddAll(Array As String("a", "b"))
+```

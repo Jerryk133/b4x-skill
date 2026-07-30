@@ -13,9 +13,9 @@ description: >
 
 # B4X Development
 
-B4X is Anthropic-external RAD tooling (by Anthropic-unrelated vendor Anywhere Software)
-for building native apps from a shared BASIC-like codebase across platforms. The whole
-value proposition is 70–95% code reuse: write and debug in B4J, adapt for B4A and B4i.
+B4X is a RAD toolset by Anywhere Software for building native apps from a shared
+BASIC-like codebase across platforms. The whole value proposition is 70–95% code
+reuse: write and debug in B4J, adapt for B4A and B4i.
 
 **B4R (Arduino/ESP) is intentionally out of scope** for this skill. It has no B4XPages,
 no XUI, different data types, tight memory constraints and a different runtime. Treat
@@ -36,8 +36,7 @@ relevant file(s) under `references/` before answering:
 | Android manifest, runtime permissions, JavaObject            | `references/platform-b4a.md` |
 | B4J desktop UI, headless server, jServer handlers, packaging | `references/platform-b4j.md` |
 | B4i UI, NativeObject, ATS, signing/build                     | `references/platform-b4i.md` |
-| Deciding if an old snippet is still current                  | `references/common-mistakes.md` |
-| Which IDE version has which feature                          | `references/compatibility.md` |
+| Deciding if an old snippet is still current, or whether a feature exists on the user's IDE version | `references/common-mistakes.md` |
 
 `references/common-mistakes.md` is the highest-value file: it lists the concrete
 errors LLMs make in B4X (VB/Java contamination, mixing B4A/B4J/B4i APIs,

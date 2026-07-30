@@ -189,11 +189,17 @@ path.LineTo(x2, y2)
 ' B4X
 xui.Color_RGB(r, g, b)
 xui.Color_ARGB(a, r, g, b)
-xui.IsB4A : xui.IsB4i : xui.IsB4J
+xui.IsB4A : xui.IsB4i : xui.IsB4J   ' runtime check — see note below
 xui.Scale                       ' 1 on B4i/B4J
 xui.DefaultFolder               ' see the note below
 xui.SetDataFolder("AppName")    ' required on B4J before using DefaultFolder
 ```
+
+> **Runtime vs compile-time branching.** `xui.IsB4A / IsB4i / IsB4J` are *runtime*
+> booleans — all branches must still compile on every platform, so they can't guard
+> platform-specific types or APIs. Use `#If B4A … #End If` for that: it's a *compile-time*
+> directive, so the excluded code is never parsed. Rule: `#If` for platform APIs,
+> `xui.IsB4A` for platform-dependent values and layout tweaks.
 
 > **`xui.DefaultFolder` is the app's private data folder** (B4A: `DirInternal`,
 > B4i: `DirDocuments`, B4J: `DirData`). It is **not** a drop-in replacement for

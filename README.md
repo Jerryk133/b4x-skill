@@ -140,8 +140,7 @@ being handled.
 | `platform-b4a.md` | Android manifest, permissions, `JavaObject` |
 | `platform-b4j.md` | Desktop, JavaFX, servers, handlers, packaging |
 | `platform-b4i.md` | iOS build, signing, ATS, `NativeObject` |
-| `common-mistakes.md` | Frequent AI and migration errors |
-| `compatibility.md` | Version-sensitive B4X features and verification notes |
+| `common-mistakes.md` | Frequent AI and migration errors, version-gated features |
 
 ## Repository structure
 
@@ -157,7 +156,6 @@ b4x-skill/
 │           ├── async-network.md
 │           ├── b4xpages-and-xui.md
 │           ├── common-mistakes.md
-│           ├── compatibility.md
 │           ├── custom-views-and-libraries.md
 │           ├── data-and-io.md
 │           ├── language-and-modules.md
@@ -212,7 +210,7 @@ When publishing a new release, update the version in
 - [Claude Code plugin marketplaces](https://code.claude.com/docs/en/plugin-marketplaces)
 - [Agent Skills specification](https://agentskills.io/specification)
 
-The Working Style guidance in `SKILL.md` adapts ideas from
+The Working Style guidance in this skill adapts ideas from
 [`multica-ai/andrej-karpathy-skills`](https://github.com/multica-ai/andrej-karpathy-skills),
 licensed under MIT.
 
