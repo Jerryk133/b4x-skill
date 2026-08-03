@@ -17,12 +17,46 @@ interface is what it tells you about B4X, not how its own files are arranged.
 
 ## [Unreleased]
 
+## [1.2.0] — 2026-08-03
+
+Covers the edge-to-edge enforcement that arrives with `targetSdkVersion 36`,
+which Google Play has required for new apps and updates since 31 August 2026.
+
 ### Added
 
-- `scripts/validate.mjs` now fails if `skills/` contains a skill it does not
-  cover. Its checks are hardcoded to one skill, so a second one would have been
-  ignored while the run still reported success — health it never measured. The
-  guard forces the script to be generalised at that point instead.
+- Edge-to-edge section in `platform-b4a.md`: at targetSdk 36 the app draws under
+  the system bars with no opt-out. B4XPages handles insets from B4A 13.7;
+  Activity projects need `ime.GetContentRect` in every activity. Covers
+  `B4XPages.HandleInsets`, `#EdgeToEdgeOldDevices`, and the
+  `enableOnBackInvokedCallback` default.
+- `common-mistakes.md` gains the `windowOptOutEdgeToEdgeEnforcement` trap. The
+  attribute is disabled at targetSdk 36 and fails silently — no error, no log,
+  the layout just breaks — yet it is what the targetSdk 35 era material still
+  recommends, so it is easy to reproduce from memory. Includes the detail that
+  it still works on Android 15 devices, so testing can hide the problem.
+- Inset handling added to the version-gated table as B4A 13.7+.
+- `b4xpages-and-xui.md` notes that B4XPages needed no layout changes for
+  targetSdk 36, and documents `B4XPages.HandleInsets`.
+- `scripts/validate.mjs` fails if `skills/` contains a skill it does not cover.
+  Its checks are hardcoded to one skill, so a second one would have been ignored
+  while the run still reported success — health it never measured.
+
+### Changed
+
+- Quick rule 1 in `SKILL.md` now cites inset handling, which is a far more
+  concrete argument for B4XPages than lifecycle convenience: a B4XPages project
+  needed no changes for targetSdk 36, an Activity project needs work per screen.
+- Quick rule 4 warns that anchored Designer layouts draw under the system bars at
+  targetSdk 36. The skill was recommending the Designer-plus-Anchors approach
+  that the change breaks, without mentioning the change.
+
+### Fixed
+
+- `platform-b4a.md` listed `#TargetSdkVersion` as a project attribute in Main.
+  B4A sets `minSdkVersion` and `targetSdkVersion` in the Manifest Editor, so the
+  generated line did nothing. Project attributes and the Manifest Editor are now
+  presented as the separate places they are, with the correct `AddManifestText`
+  form. The stated value 34 was also below both current Play thresholds.
 
 ## [1.1.0] — 2026-07-30
 
@@ -80,6 +114,7 @@ interface is what it tells you about B4X, not how its own files are arranged.
   mistakes.
 - Claude Code plugin and marketplace manifests.
 
-[Unreleased]: https://github.com/Jerryk133/b4x-skill/compare/v1.1.0...HEAD
+[Unreleased]: https://github.com/Jerryk133/b4x-skill/compare/v1.2.0...HEAD
+[1.2.0]: https://github.com/Jerryk133/b4x-skill/compare/v1.1.0...v1.2.0
 [1.1.0]: https://github.com/Jerryk133/b4x-skill/compare/v1.0.0...v1.1.0
 [1.0.0]: https://github.com/Jerryk133/b4x-skill/releases/tag/v1.0.0

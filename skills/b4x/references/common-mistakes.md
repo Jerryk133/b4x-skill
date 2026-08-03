@@ -120,6 +120,7 @@ the version-gated things worth knowing; the floor versions are fixed historical 
 | Omitting the Starter service **without changing unhandled-exception behaviour**, `Application_Error` in Main | B4A 13.5+ | keep the Starter service and put `Application_Error` there |
 | `WebView.AllowFileAccess` | B4A 13.1+ | — |
 | `#CustomBuildAction` vars (`%PROJECT%`, `%B4X%`, `%JAVABIN%`, `%PROJECT_NAME%`, `%ADDITIONAL%`) | B4A 13.1+ | hardcode the paths |
+| Edge-to-edge inset handling (`B4XPages.HandleInsets`, `#EdgeToEdgeOldDevices`, `ime.GetContentRect`) | B4A 13.7+ | none — targetSdk 36 needs 13.7; older IDEs can only stay at targetSdk 35 |
 | `targetSdkVersion 34` toolchain (needs Java 19) | B4A 13.0+ | — |
 | **B4XPages itself** | B4A 10.0 / B4J 8.50 / B4i 6.80 | legacy Activities (B4A) — but recommend upgrading instead |
 
@@ -130,7 +131,33 @@ answer, ask — or generate the fallback, which compiles everywhere.
 updates and any number in this skill's own history has already been wrong once. Check
 b4x.com.
 
-## 12. Presenting a Windows-only build step as universal
+## 12. The edge-to-edge opt-out that silently does nothing
+
+There is a large body of forum and blog material from the `targetSdkVersion 35` era
+recommending this to switch edge-to-edge off:
+
+```xml
+<!-- Obsolete at targetSdkVersion 36 — do not generate this as the fix -->
+<item name="android:windowOptOutEdgeToEdgeEnforcement">true</item>
+```
+
+At `targetSdkVersion 36` the attribute is deprecated and **disabled**. It throws no
+error and logs nothing; the app simply goes edge-to-edge anyway and content draws under
+the system bars. Because Play requires targetSdk 36, this recipe is now a trap rather
+than a solution, and it is exactly the kind of stale snippet that gets reproduced from
+memory.
+
+Two details that make it worse:
+
+- A targetSdk 36 app **still honours the opt-out on an Android 15 device**, so it can
+  look like it works in testing and fail on Android 16.
+- The original recipe also required removing any existing
+  `CreateResourceFromFile(Macro, Themes.LightTheme)` line, since the custom theme
+  replaces it. Copies of the snippet usually drop that part.
+
+Handle insets instead — see `platform-b4a.md`.
+
+## 13. Presenting a Windows-only build step as universal
 
 The common Shared-Files copy trick — `#CustomBuildAction` invoking `Robocopy` — is
 **Windows-only**. B4J and B4i developers on macOS or Linux need an equivalent shell copy

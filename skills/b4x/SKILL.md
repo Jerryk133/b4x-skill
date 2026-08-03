@@ -49,6 +49,8 @@ non-trivial code.
    legacy Activities. Process-global state lives in **`Main.Process_Globals`**
    (Main is a code module); per-page state lives in **`B4XMainPage.Class_Globals`**
    (a class module). You cannot put `Process_Globals` inside a class module.
+   B4XPages also handles system-bar insets under the edge-to-edge enforcement that
+   `targetSdkVersion 36` brings; Activity projects must do it per activity.
 2. **Starter service:** don't add it to new B4XPages projects. It is not "removed" —
    older projects may still use it — but new B4XPages code doesn't need it, so declare
    shared objects in `Main.Process_Globals` and put `Application_Error` in Main.
@@ -57,7 +59,10 @@ non-trivial code.
    `.As(...)` casts or `#If B4A/B4J/B4i` blocks.
 4. **Prefer the Visual Designer** (layouts + Anchors + Designer Script `AutoScaleAll`)
    over building UI in code — **except** for dynamic content (list items, generated
-   grids) and custom views, where code is correct.
+   grids) and custom views, where code is correct. On B4A, remember that anchored
+   layouts draw under the system bars at `targetSdkVersion 36` unless insets are
+   handled — never suggest the old `windowOptOutEdgeToEdgeEnforcement` opt-out, which
+   is disabled there.
 5. **SQL:** parameterize data values with `ExecQuery2` / `ExecNonQuery2` and
    `Array As Object(...)`. Never concatenate untrusted input. Static DDL
    (`CREATE TABLE …`) has no data values and legitimately uses plain `ExecNonQuery`.
