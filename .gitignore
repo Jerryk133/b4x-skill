@@ -1,0 +1,19 @@
+# Local working notes and source material.
+# Research inputs and drafts live here; they are not part of the published skill
+# and must not be mistaken for skill content by anything reading the repo.
+docs/
+
+# Node (validate.mjs has no dependencies, but keep this if that ever changes)
+node_modules/
+package-lock.json
+
+# Editors
+.vscode/
+.idea/
+*.swp
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+Desktop.ini
