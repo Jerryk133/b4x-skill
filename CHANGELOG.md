@@ -17,6 +17,26 @@ interface is what it tells you about B4X, not how its own files are arranged.
 
 ## [Unreleased]
 
+## [1.3.1] — 2026-08-09
+
+### Fixed
+
+- **Reverses the main claim of 1.3.0: `B4XPages.HandleInsets` does exist.** It is
+  declared in `B4XPages.bas` as `Public HandleInsets as Boolean = True` in
+  `Process_Globals`, and `B4XPagesManager.bas` reads it inside `#If B4A` to
+  choose between `ime.GetContentRect` and `0, 0, 100%x, 100%y`. The 1.2.0
+  guidance was correct and 1.3.0 wrongly removed it.
+
+  The bad verification: the library-doc tooling lists a `.b4xlib` module's
+  **Subs**, and a name search covers types, methods, properties and events. A
+  public variable in `Process_Globals` appears in none of those, so two searches
+  returning nothing was taken as proof of absence when it only meant the searches
+  could not see that kind of member. For `.b4xlib` libraries, read the extracted
+  source before concluding an API does not exist.
+
+- Restored with detail neither previous version had: the default is `True`, and
+  the flag only affects B4A, since the branch reading it is inside `#If B4A`.
+
 ## [1.3.0] — 2026-08-09
 
 B4A 13.7 was released as stable. Its edge-to-edge API was verified against the
@@ -150,7 +170,8 @@ which Google Play has required for new apps and updates since 31 August 2026.
   mistakes.
 - Claude Code plugin and marketplace manifests.
 
-[Unreleased]: https://github.com/Jerryk133/b4x-skill/compare/v1.3.0...HEAD
+[Unreleased]: https://github.com/Jerryk133/b4x-skill/compare/v1.3.1...HEAD
+[1.3.1]: https://github.com/Jerryk133/b4x-skill/compare/v1.3.0...v1.3.1
 [1.3.0]: https://github.com/Jerryk133/b4x-skill/compare/v1.2.0...v1.3.0
 [1.2.0]: https://github.com/Jerryk133/b4x-skill/compare/v1.1.0...v1.2.0
 [1.1.0]: https://github.com/Jerryk133/b4x-skill/compare/v1.0.0...v1.1.0

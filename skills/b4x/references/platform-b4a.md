@@ -49,7 +49,18 @@ Handling insets arrived in **B4A 13.7** (IME library v2.01, B4XPages v1.15). Wha
 depends on the project shape.
 
 **B4XPages — nothing to do.** Each page is a panel that B4XPages sizes to the content
-area for you; on B4A the library now depends on IME for exactly this.
+area for you; on B4A the library depends on IME for exactly this. The behaviour is
+controlled by a public Boolean in the B4XPages code module:
+
+```b4x
+' B4A only — default is True; set it before the first page is shown
+B4XPages.HandleInsets = False
+```
+
+`True` (the default) sizes the page root to `ime.GetContentRect`. `False` gives it
+`0, 0, 100%x, 100%y`, so the page fills the screen and draws under the system bars —
+correct only for genuinely full-screen apps such as games and video players. The branch
+that reads it is inside `#If B4A`, so it has no effect on B4J or B4i.
 
 **Legacy Activity projects — every activity needs a root panel.** Load the layout into
 that panel rather than into the Activity:

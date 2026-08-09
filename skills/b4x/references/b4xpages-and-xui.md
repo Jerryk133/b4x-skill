@@ -8,8 +8,9 @@ The entry class is **`B4XMainPage`** (a **class** module → uses `Class_Globals
 From B4A 13.7 it also handles system-bar insets, so a B4XPages project needed no layout
 changes for the edge-to-edge enforcement that `targetSdkVersion 36` brings: each page is
 a panel that the manager sizes to the content area, and on B4A the library depends on IME
-to get it. Activity-based projects have to build that root panel themselves in every
-activity — see `platform-b4a.md`.
+to get it. `B4XPages.HandleInsets` (Boolean, default `True`) turns that off for
+full-screen apps — B4A only. Activity-based projects have to build that root panel
+themselves in every activity — see `platform-b4a.md`.
 
 ### Lifecycle events
 

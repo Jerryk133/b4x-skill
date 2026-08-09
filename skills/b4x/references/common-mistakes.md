@@ -120,7 +120,7 @@ the version-gated things worth knowing; the floor versions are fixed historical 
 | Omitting the Starter service **without changing unhandled-exception behaviour**, `Application_Error` in Main | B4A 13.5+ | keep the Starter service and put `Application_Error` there |
 | `WebView.AllowFileAccess` | B4A 13.1+ | — |
 | `#CustomBuildAction` vars (`%PROJECT%`, `%B4X%`, `%JAVABIN%`, `%PROJECT_NAME%`, `%ADDITIONAL%`) | B4A 13.1+ | hardcode the paths |
-| Edge-to-edge inset handling (`IME.GetContentRect`, `IME.IsEdgeToEdge`, `IME.InsetsChanged`, `#EdgeToEdgeOldDevices`) | B4A 13.7+ (IME 2.01, B4XPages 1.15) | none — targetSdk 36 needs 13.7; older IDEs can only stay at targetSdk 35 |
+| Edge-to-edge inset handling (`IME.GetContentRect`, `IME.IsEdgeToEdge`, `IME.InsetsChanged`, `B4XPages.HandleInsets`, `#EdgeToEdgeOldDevices`) | B4A 13.7+ (IME 2.01, B4XPages 1.15) | none — targetSdk 36 needs 13.7; older IDEs can only stay at targetSdk 35 |
 | `ThrowException(Message)`, `Exception.StackTrace` | B4A 13.7+ | raise via a runtime error; log `LastException` without the trace |
 | `targetSdkVersion 34` toolchain (needs Java 19) | B4A 13.0+ | — |
 | **B4XPages itself** | B4A 10.0 / B4J 8.50 / B4i 6.80 | legacy Activities (B4A) — but recommend upgrading instead |
