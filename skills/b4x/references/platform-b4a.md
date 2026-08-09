@@ -45,21 +45,38 @@ At `targetSdkVersion 36` the app draws under the status and navigation bars and 
 is no opt-out**. Content anchored to the top or bottom of a Designer layout will sit
 underneath the system bars unless insets are handled.
 
-Handling insets arrived in **B4A 13.7**. What you do depends on the project shape:
+Handling insets arrived in **B4A 13.7** (IME library v2.01, B4XPages v1.15). What you do
+depends on the project shape.
+
+**B4XPages — nothing to do.** Each page is a panel that B4XPages sizes to the content
+area for you; on B4A the library now depends on IME for exactly this.
+
+**Legacy Activity projects — every activity needs a root panel.** Load the layout into
+that panel rather than into the Activity:
 
 ```b4x
-' B4A only — B4XPages: nothing to do, insets are handled for you.
-' Only for genuinely full-screen apps (games, video):
-B4XPages.HandleInsets = False
-```
+' B4A only — requires the IME library
+Private ime As IME
+Private root As B4XView
 
-```b4x
-' B4A only — legacy Activity projects, in EVERY activity. Requires the IME library.
 ime.Initialize("ime")
 root = xui.CreatePanel("")
 Dim Content As Rect = ime.GetContentRect
 Activity.AddView(root, Content.Left, Content.Top, Content.Width, Content.Height)
+root.LoadLayout("MainLayout")          ' into the panel, not the Activity
 ```
+
+This works on E2E and non-E2E devices alike, so it isn't conditional code.
+
+Useful IME members for this (all verified signatures):
+
+| Member | What it does |
+|--------|--------------|
+| `GetContentRect As Rect` | content area excluding system bars, display cutouts and the ActionBar |
+| `IsEdgeToEdge As Boolean` | whether the activity is actually in E2E mode — accounts for targetSdkVersion, device version and the opt-out flag |
+| `GetActionBarHeight As Int` | action bar height, 0 if none |
+| `AddHeightChangedEvent` | enables the `HeightChanged` and `InsetsChanged` events; `InsetsChanged` fires only in E2E mode |
+| `UpdatePercentageReference(Width, Height)` | resets the reference for `%x` / `%y` — needed if your layout uses percentages inside a root panel smaller than the screen |
 
 `#EdgeToEdgeOldDevices` turns E2E on for older devices too, which is recommended so you
 get one layout behaviour instead of two. Note that `enableOnBackInvokedCallback` defaults

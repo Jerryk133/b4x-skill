@@ -153,6 +153,26 @@ Do Until cond
 Loop
 ```
 
+## Errors
+
+`Catch` takes no parameter — the exception is read from `LastException`.
+
+```b4x
+' B4X
+Try
+    Dim n As Int = "not a number"
+Catch
+    Log(LastException.Message)
+    Log(LastException.StackTrace)      ' B4A 13.7+
+End Try
+
+ThrowException("Config file is missing")   ' B4A 13.7+, raises an exception
+```
+
+`ThrowException(Message As String)` and `Exception.StackTrace As String` are both Core
+members added in B4A 13.7. On older IDEs, log `LastException.Message` alone and raise
+errors by triggering a runtime error instead.
+
 ## Subs
 
 ```b4x

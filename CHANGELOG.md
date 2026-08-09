@@ -17,6 +17,42 @@ interface is what it tells you about B4X, not how its own files are arranged.
 
 ## [Unreleased]
 
+## [1.3.0] — 2026-08-09
+
+B4A 13.7 was released as stable. Its edge-to-edge API was verified against the
+installed libraries rather than forum posts, which corrected the guidance 1.2.0
+shipped.
+
+### Fixed
+
+- **`B4XPages.HandleInsets` does not exist.** 1.2.0 documented it in
+  `platform-b4a.md` and `b4xpages-and-xui.md` as the way to disable inset
+  handling for full-screen apps. It is absent from the public API of both
+  B4XPages modules and from every installed library. It came from a summary of a
+  beta announcement thread and was written up without being checked against the
+  library — precisely the fabricated-API failure this skill exists to prevent.
+  Removed.
+- The Activity root-panel pattern was missing its point: the layout must be
+  loaded into the root panel (`root.LoadLayout(...)`), not into the Activity.
+- The version-gated table named the wrong API for inset handling.
+
+### Added
+
+- Verified IME members for edge-to-edge work in `platform-b4a.md`:
+  `GetContentRect`, `IsEdgeToEdge`, `GetActionBarHeight`, `AddHeightChangedEvent`
+  with the `InsetsChanged` event, and `UpdatePercentageReference` for layouts
+  using `%x` / `%y` inside a root panel smaller than the screen.
+- `Errors` section in `language-and-modules.md`. `Catch` takes no parameter and
+  the exception is read from `LastException`; this was only visible in a table
+  row and one example before.
+- `ThrowException(Message)` and `Exception.StackTrace`, both Core members added
+  in B4A 13.7, with their pre-13.7 fallbacks.
+
+### Changed
+
+- Inset support is now recorded with the component versions it needs — B4A 13.7,
+  IME 2.01, B4XPages 1.15 — since B4XPages depends on IME on B4A to do it.
+
 ## [1.2.0] — 2026-08-03
 
 Covers the edge-to-edge enforcement that arrives with `targetSdkVersion 36`,
@@ -114,7 +150,8 @@ which Google Play has required for new apps and updates since 31 August 2026.
   mistakes.
 - Claude Code plugin and marketplace manifests.
 
-[Unreleased]: https://github.com/Jerryk133/b4x-skill/compare/v1.2.0...HEAD
+[Unreleased]: https://github.com/Jerryk133/b4x-skill/compare/v1.3.0...HEAD
+[1.3.0]: https://github.com/Jerryk133/b4x-skill/compare/v1.2.0...v1.3.0
 [1.2.0]: https://github.com/Jerryk133/b4x-skill/compare/v1.1.0...v1.2.0
 [1.1.0]: https://github.com/Jerryk133/b4x-skill/compare/v1.0.0...v1.1.0
 [1.0.0]: https://github.com/Jerryk133/b4x-skill/releases/tag/v1.0.0

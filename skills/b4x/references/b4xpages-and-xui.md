@@ -6,9 +6,10 @@ B4XPages makes B4A behave like B4J/B4i and removes Android Activity lifecycle pa
 The entry class is **`B4XMainPage`** (a **class** module → uses `Class_Globals`).
 
 From B4A 13.7 it also handles system-bar insets, so a B4XPages project needed no layout
-changes for the edge-to-edge enforcement that `targetSdkVersion 36` brings. Set
-`B4XPages.HandleInsets = False` only for genuinely full-screen apps. Activity-based
-projects have to position content manually in every activity — see `platform-b4a.md`.
+changes for the edge-to-edge enforcement that `targetSdkVersion 36` brings: each page is
+a panel that the manager sizes to the content area, and on B4A the library depends on IME
+to get it. Activity-based projects have to build that root panel themselves in every
+activity — see `platform-b4a.md`.
 
 ### Lifecycle events
 
@@ -53,7 +54,6 @@ Common API:
 B4XPages.ShowPage("Page2")
 B4XPages.ClosePage(Me)
 B4XPages.SetTitle(Me, "My Title")
-B4XPages.HandleInsets = False                    ' B4A 13.7+, full-screen apps only
 Dim mp As B4XMainPage = B4XPages.MainPage        ' the main page instance
 Dim id As String = B4XPages.GetPageId(Me)
 ```
