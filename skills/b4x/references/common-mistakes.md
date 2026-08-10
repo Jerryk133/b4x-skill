@@ -158,7 +158,35 @@ Two details that make it worse:
 
 Handle insets instead — see `platform-b4a.md`.
 
-## 13. Presenting a Windows-only build step as universal
+## 13. Idioms the B4X author recommends against
+
+These come from Erel's own "Code Smells" and "Features to avoid" lists. They compile, so
+nothing flags them — they are just not how B4X is written now.
+
+| Instead of | Write |
+|------------|-------|
+| `map.GetKeyAt(i)` / `map.GetValueAt(i)` | `For Each k As String In map.Keys` |
+| `File.DirDefaultExternal` | `xui.DefaultFolder` |
+| `File.DirRootExternal` | `ContentChooser` (Phone library) or a save-as flow |
+| `Round2(n)` to format a number for display | `NumberFormat` / `NumberFormat2`, or `B4XFormatter` for per-range rules |
+| `VideoView` | `ExoPlayer` |
+| `BytesToString` on bytes that are not text | `B4XBytesBuilder` (in B4XCollections) |
+| `ExecQuerySingleResult` where there may be no row | `ExecQuery2`, then check `rs.NextRow` |
+| `TextReader` / `TextWriter` over a network | `AsyncStreams` |
+| `TextReader` / `TextWriter` over files | `File.ReadString`, `File.ReadList` |
+| Building XML or JSON by concatenating strings | `JSONGenerator`, `XMLBuilder`, `Map2Xml` |
+| Initializing an object and then assigning a different one to the same variable | assign directly |
+
+`Round2` deserves the note: it rounds a `Double`, which is a numeric operation. Most uses
+of it are really formatting for display, and that is a different job.
+
+Three more that are about shape rather than API:
+
+- **Repeated near-identical blocks.** Put the varying parts in a collection and loop.
+- **`If cond Then Return True Else Return False`.** Return the expression.
+- **Globals used by one sub.** Declare locally; module scope is for shared state.
+
+## 14. Presenting a Windows-only build step as universal
 
 The common Shared-Files copy trick — `#CustomBuildAction` invoking `Robocopy` — is
 **Windows-only**. B4J and B4i developers on macOS or Linux need an equivalent shell copy

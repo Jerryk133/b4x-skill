@@ -137,6 +137,7 @@ being handled.
 | `data-and-io.md` | SQLite, `ResultSet`, transactions, files, JSON |
 | `async-network.md` | `Sleep`, `Wait For`, resumable subs, timers, `HttpJob` |
 | `custom-views-and-libraries.md` | XUI custom views and `.b4xlib` packaging |
+| `bundled-libraries.md` | Libraries shipped with the IDE and what they are for |
 | `platform-b4a.md` | Android manifest, permissions, `JavaObject` |
 | `platform-b4j.md` | Desktop, JavaFX, servers, handlers, packaging |
 | `platform-b4i.md` | iOS build, signing, ATS, `NativeObject` |
@@ -160,6 +161,7 @@ b4x-skill/
 │       └── references/
 │           ├── async-network.md
 │           ├── b4xpages-and-xui.md
+│           ├── bundled-libraries.md
 │           ├── common-mistakes.md
 │           ├── custom-views-and-libraries.md
 │           ├── data-and-io.md

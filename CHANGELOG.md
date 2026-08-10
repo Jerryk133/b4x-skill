@@ -17,6 +17,37 @@ interface is what it tells you about B4X, not how its own files are arranged.
 
 ## [Unreleased]
 
+## [1.4.0] — 2026-08-09
+
+Closes the gap between this skill and Erel's own recommendations, and gives the
+skill a way to know what already exists before it invents something.
+
+### Added
+
+- `references/bundled-libraries.md`. The skill previously documented only the
+  libraries that are architecturally load-bearing or universally needed, so a
+  whole tier of things that ship with the IDE — `B4XTable`, `KeyValueStore`,
+  `Xml2Map`, `MediaChooser`, `NB6`, `B4XDrawer`, `PreoptimizedCLV` and the rest —
+  was invisible. The file is organised for recall rather than reference: what
+  exists and what it is for, deliberately without signatures, which is the part
+  that goes stale.
+- `ListOfArrays` (LoA) covered in that file: tabular data in memory instead of a
+  `List` of `Map`s or parallel arrays, with its `LOAUtils` entry points. It was
+  released in May 2026, so no model has seen it — without the skill it will never
+  be suggested. For the same reason it carries an explicit instruction not to
+  write LoA code from memory: it was pre-1.0 at the time of writing and has
+  roughly 70 public subs, which is an invitation to confabulate the rest.
+- Section 13 of `common-mistakes.md`, covering the items from Erel's "Code
+  Smells" and "Features to avoid" that the skill did not have:
+  `GetKeyAt`/`GetValueAt`, `File.DirDefaultExternal`, `File.DirRootExternal`,
+  `Round2` used for display, `VideoView`, `BytesToString` on non-text bytes,
+  `ExecQuerySingleResult` with a possibly-absent row, `TextReader`/`TextWriter`,
+  hand-built XML and JSON, and initialise-then-reassign. Plus repetition,
+  redundant boolean returns and needless globals.
+- A closing note in `bundled-libraries.md` on how to check an API without
+  inventing one, including that a Subs-only listing cannot see a `Public`
+  variable in `Process_Globals` — the mistake made in 1.3.0.
+
 ## [1.3.1] — 2026-08-09
 
 ### Fixed
@@ -170,7 +201,8 @@ which Google Play has required for new apps and updates since 31 August 2026.
   mistakes.
 - Claude Code plugin and marketplace manifests.
 
-[Unreleased]: https://github.com/Jerryk133/b4x-skill/compare/v1.3.1...HEAD
+[Unreleased]: https://github.com/Jerryk133/b4x-skill/compare/v1.4.0...HEAD
+[1.4.0]: https://github.com/Jerryk133/b4x-skill/compare/v1.3.1...v1.4.0
 [1.3.1]: https://github.com/Jerryk133/b4x-skill/compare/v1.3.0...v1.3.1
 [1.3.0]: https://github.com/Jerryk133/b4x-skill/compare/v1.2.0...v1.3.0
 [1.2.0]: https://github.com/Jerryk133/b4x-skill/compare/v1.1.0...v1.2.0

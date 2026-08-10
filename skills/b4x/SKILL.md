@@ -33,6 +33,7 @@ relevant file(s) under `references/` before answering:
 | SQLite, ResultSet, files I/O, JSON parse/generate            | `references/data-and-io.md` |
 | Sleep, Wait For, resumable subs, HttpJob, error handling     | `references/async-network.md` |
 | Custom views (XUI), building a .b4xlib                        | `references/custom-views-and-libraries.md` |
+| Is there already a library for this? What ships with the IDE  | `references/bundled-libraries.md` |
 | Android manifest, runtime permissions, JavaObject            | `references/platform-b4a.md` |
 | B4J desktop UI, headless server, jServer handlers, packaging | `references/platform-b4j.md` |
 | B4i UI, NativeObject, ATS, signing/build                     | `references/platform-b4i.md` |
