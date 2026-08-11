@@ -17,6 +17,28 @@ interface is what it tells you about B4X, not how its own files are arranged.
 
 ## [Unreleased]
 
+## [1.5.0] — 2026-08-10
+
+Reported from practice: generated projects kept failing to compile because a
+variable, a Sub and a module had ended up with the same name.
+
+### Added
+
+- `Naming and collisions` in `language-and-modules.md`. Identifiers are
+  case-insensitive, so names that coexist happily in Java or C# collide in B4X.
+  Tabulates what shares a namespace: a Sub and a variable in one module; a Sub
+  parameter and a global, which fails with *"Parameter name cannot hide global
+  variable name"*; anything and a module name, since modules are qualifiers;
+  a Designer view and anything else in its module, because `LoadLayout` binds
+  views to same-named variables; and anything named after a library type. Notes
+  the `m` prefix for module-level state that Erel's own library sources use.
+- Section 13 of `common-mistakes.md` for the same trap, with the point that
+  matters when generating: pick names against the set already in use across the
+  module and project, not per sub. Choosing a name in isolation is what produces
+  the collision.
+- A name-collision line in the `SKILL.md` compile checklist, which is where it
+  gets checked before code is handed over.
+
 ## [1.4.0] — 2026-08-09
 
 Closes the gap between this skill and Erel's own recommendations, and gives the
@@ -201,7 +223,8 @@ which Google Play has required for new apps and updates since 31 August 2026.
   mistakes.
 - Claude Code plugin and marketplace manifests.
 
-[Unreleased]: https://github.com/Jerryk133/b4x-skill/compare/v1.4.0...HEAD
+[Unreleased]: https://github.com/Jerryk133/b4x-skill/compare/v1.5.0...HEAD
+[1.5.0]: https://github.com/Jerryk133/b4x-skill/compare/v1.4.0...v1.5.0
 [1.4.0]: https://github.com/Jerryk133/b4x-skill/compare/v1.3.1...v1.4.0
 [1.3.1]: https://github.com/Jerryk133/b4x-skill/compare/v1.3.0...v1.3.1
 [1.3.0]: https://github.com/Jerryk133/b4x-skill/compare/v1.2.0...v1.3.0

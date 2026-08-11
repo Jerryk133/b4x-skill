@@ -54,6 +54,36 @@ Dim m As Map                      ' NOT usable yet
 m.Initialize                      ' now it is
 ```
 
+### Naming and collisions
+
+Identifiers are **case-insensitive**, so `Count`, `count` and `COUNT` are one name. Names
+that would coexist happily in Java or C# collide here, and the compiler rejects the
+result. Generated code hits this often, because a name is picked in one place without
+checking what else already uses it.
+
+Names that must not clash:
+
+| These share a namespace | Consequence |
+|-------------------------|-------------|
+| A Sub and a variable in the same module | one name, two things — rejected |
+| A Sub parameter and a global variable | rejected: *"Parameter name cannot hide global variable name"* |
+| A variable or Sub and a **module** name | modules are qualifiers (`Main.Something`), so the reference is ambiguous |
+| A Designer view and anything else in the module | `LoadLayout` binds views to same-named declared variables, so the view name is already taken |
+| Anything and a keyword or library type (`Label`, `List`, `Timer`, `File`…) | shadows the type; `Dim List As List` is not valid |
+
+Erel's own library sources use a lowercase `m` prefix for module-level state — `mPM`,
+`mMainForm` in B4XPages — which keeps globals clear of parameters, locals and view names.
+It is a convention worth following for the same reason.
+
+Practical rules when writing or reviewing code:
+
+- Never reuse a module name for a variable, Sub or view.
+- Give Sub parameters names that cannot be globals: `NewTitle`, not `Title`.
+- Keep view names in the Designer distinct from any Sub — `btnSave` and `Sub btnSave_Click`
+  are fine, because the event handler name is derived, not equal.
+- If a compile error names an identifier that looks correct, search the project for the
+  name before changing anything else. The other definition is usually the problem.
+
 ### Types (structures)
 
 Declared **in a globals block**, never inline in a sub.

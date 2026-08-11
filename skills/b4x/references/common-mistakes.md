@@ -158,7 +158,22 @@ Two details that make it worse:
 
 Handle insets instead — see `platform-b4a.md`.
 
-## 13. Idioms the B4X author recommends against
+## 13. Name collisions, because identifiers are case-insensitive
+
+A frequent failure in generated projects: a variable, a Sub and a module end up with the
+same name. `Count` and `count` are one identifier in B4X, so names that would coexist in
+Java or C# collide, and it surfaces as a compile error far from where the name was chosen.
+
+Check before naming: a Sub and a variable in one module, a Sub parameter and a global
+(*"Parameter name cannot hide global variable name"*), anything and a **module** name, a
+Designer view and anything else in its module, and anything named after a library type
+(`Dim List As List`). See `language-and-modules.md` for the full table and the `m` prefix
+convention for module-level state.
+
+When generating a whole module or project, pick names against the set already in use
+rather than per sub — that is where this error comes from.
+
+## 14. Idioms the B4X author recommends against
 
 These come from Erel's own "Code Smells" and "Features to avoid" lists. They compile, so
 nothing flags them — they are just not how B4X is written now.
@@ -186,7 +201,7 @@ Three more that are about shape rather than API:
 - **`If cond Then Return True Else Return False`.** Return the expression.
 - **Globals used by one sub.** Declare locally; module scope is for shared state.
 
-## 14. Presenting a Windows-only build step as universal
+## 15. Presenting a Windows-only build step as universal
 
 The common Shared-Files copy trick — `#CustomBuildAction` invoking `Robocopy` — is
 **Windows-only**. B4J and B4i developers on macOS or Linux need an equivalent shell copy

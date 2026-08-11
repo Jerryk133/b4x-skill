@@ -76,6 +76,9 @@ non-trivial code.
 ## Compile checklist (run before returning any B4X code)
 
 - [ ] Correct module type: `Process_Globals` only in code modules; `Class_Globals` in classes.
+- [ ] No name collides. Identifiers are **case-insensitive**, so check each new name against
+      the module's Subs, globals, Designer views, the module names in the project, and
+      library types. Sub parameters must not share a name with a global.
 - [ ] Every object is initialized before use (`Map`, `List`, `SQL`, custom views…).
       Prefer `CreateMap(...)` or explicit `.Initialize`.
 - [ ] Event handler signatures match exactly (`Sub Name_Event(args…)`), including
