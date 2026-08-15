@@ -242,7 +242,7 @@ files are laid out.
 - [Claude Code plugin marketplaces](https://code.claude.com/docs/en/plugin-marketplaces)
 - [Agent Skills specification](https://agentskills.io/specification)
 
-The Working Style guidance in this skill adapts ideas from
+The structure of this skill adapts ideas from
 [`multica-ai/andrej-karpathy-skills`](https://github.com/multica-ai/andrej-karpathy-skills),
 licensed under MIT.
 

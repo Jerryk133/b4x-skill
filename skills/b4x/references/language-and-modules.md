@@ -188,20 +188,32 @@ Loop
 `Catch` takes no parameter — the exception is read from `LastException`.
 
 ```b4x
-' B4X
+' B4X — Try/Catch/LastException.Message works on every platform
 Try
     Dim n As Int = "not a number"
 Catch
     Log(LastException.Message)
-    Log(LastException.StackTrace)      ' B4A 13.7+
 End Try
-
-ThrowException("Config file is missing")   ' B4A 13.7+, raises an exception
 ```
 
-`ThrowException(Message As String)` and `Exception.StackTrace As String` are both Core
-members added in B4A 13.7. On older IDEs, log `LastException.Message` alone and raise
-errors by triggering a runtime error instead.
+```b4x
+' B4A only (13.7+) — neither member exists in B4J
+Log(LastException.StackTrace)
+ThrowException("Config file is missing")
+```
+
+`ThrowException(Message As String)` and `Exception.StackTrace As String` were added to
+**B4A's** Core in 13.7. They are **not** in B4J, so shared code must branch:
+
+```b4x
+' B4X
+#If B4A
+    Log(LastException.StackTrace)
+#End If
+```
+
+On a pre-13.7 B4A, log `LastException.Message` alone and raise errors by triggering a
+runtime error instead.
 
 ## Subs
 
@@ -282,7 +294,8 @@ Dim out As String = sb.ToString
 ```
 
 ```b4x
-' B4X — rich text; use the XUI font factories, not Typeface (B4A-only)
+' B4A / B4i only — CSBuilder does not exist in B4J.
+' Use the XUI font factories, not Typeface (B4A-only).
 Dim cs As CSBuilder
 cs.Initialize
 cs.Color(xui.Color_Red).Append("Red ")
@@ -294,6 +307,11 @@ Label1.Text = cs
 
 > `Typeface.FONTAWESOME` is **B4A only**. In shared code use
 > `xui.CreateFontAwesome(size)` / `xui.CreateMaterialIcons(size)`.
+
+> **Rich text is not cross-platform.** Swapping `Typeface` for the XUI font factories
+> makes the *font* portable, not `CSBuilder` itself — the type does not exist in B4J. For
+> formatted text in shared code, use `BCTextEngine` / `BBLabel`, or branch with
+> `#If B4J`.
 
 ## Collections
 

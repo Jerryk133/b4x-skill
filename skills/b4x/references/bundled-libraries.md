@@ -4,6 +4,10 @@ These come with the IDE. They are not forum downloads — they only need ticking
 Libraries tab. Reaching for a third-party library, or hand-rolling something from this
 list, is usually the wrong answer.
 
+> Which libraries ship, and under which names, is **per platform and per IDE version**.
+> This list was checked against a B4A install; confirm availability before assuming a
+> given entry exists in B4J or B4i. Some are B4A-only by nature (`NB6`, `FileProvider`).
+
 The point of this file is **recall, not reference**: knowing that a thing exists so you
 suggest it. It deliberately does not list signatures, because they change.
 

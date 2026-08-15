@@ -18,8 +18,13 @@ B4A's local-only build.
 #Version: 1.0
 #MinVersion: 13
 #ATSEnabled: True        ' App Transport Security — HTTPS enforced unless you add exceptions
-#SupportedOrientations: 2   ' portrait/landscape codes
+#iPhoneOrientations: Portrait, LandscapeLeft, LandscapeRight
+#iPadOrientations: Portrait, LandscapeLeft, LandscapeRight, PortraitUpsideDown
 ```
+
+> Orientation is set **per device family** with named values, not with B4A's numeric
+> `#SupportedOrientations`. These attributes are read at build time to generate the
+> PList, so they are not runtime settings.
 
 `#ATSEnabled: True` means plain-HTTP requests are blocked; use HTTPS or declare explicit
 ATS exceptions in the build settings.

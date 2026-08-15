@@ -31,9 +31,11 @@ Manifest Editor:
 AddManifestText(<uses-sdk android:minSdkVersion="21" android:targetSdkVersion="36"/>)
 ```
 
-Google Play has required `targetSdkVersion 36` for new apps and updates since
-**31 August 2026** (35 to stay installable for new users on newer devices). Targeting 36
-turns on edge-to-edge — see the next section, because it changes how layouts behave.
+Google Play requires `targetSdkVersion 36` for new apps and updates **from 31 August
+2026**, and 35 for an existing app to stay installable for new users on newer devices.
+Other device families differ: Wear OS and Automotive 35, Android TV and XR 34. A one-off
+extension to 1 November 2026 can be requested in Play Console. Targeting 36 turns on
+edge-to-edge — see the next section, because it changes how layouts behave.
 
 Android 14+ requires an explicit foreground-service type if you run a foreground service,
 and stricter background limits — another reason new UI projects lean on B4XPages instead

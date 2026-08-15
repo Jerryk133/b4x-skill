@@ -8,6 +8,11 @@ A shared database belongs in `Main.Process_Globals` (referenced as `Main.SQL1`),
 one page's `Class_Globals` if no other module needs it. It is **not** put in a Starter
 service in new B4XPages projects.
 
+> **This assumes one thread touches the database.** It holds for B4A, B4i and B4J UI
+> apps. It does **not** hold for a B4J server with multithreaded handlers — a single
+> `SQL` object shared across concurrent requests is a genuine bug. Use a
+> `ConnectionPool`, take a connection per request and close it; see `platform-b4j.md`.
+
 ### Initializing — and copying a prepared DB (order matters!)
 
 **Critical bug to avoid:** if you call `Initialize(..., True)` (CreateIfNecessary = True)

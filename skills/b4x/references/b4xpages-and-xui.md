@@ -1,6 +1,6 @@
 # B4XPages & XUI
 
-## B4XPages (mandatory for new UI projects)
+## B4XPages (the default for new UI projects)
 
 B4XPages makes B4A behave like B4J/B4i and removes Android Activity lifecycle pain.
 The entry class is **`B4XMainPage`** (a **class** module → uses `Class_Globals`).
@@ -34,18 +34,20 @@ End Sub
 
 ### Navigation & instances
 
-A page must **exist as an instance** before you show it. `AddPage` registers an
-already-created instance; `AddPageAndCreate` creates it for you.
+Both calls take a page **instance** you have already declared and initialized — neither
+constructs the class for you. They differ in *when* `B4XPage_Created` runs: `AddPage`
+defers it until the page is first shown, `AddPageAndCreate` runs it immediately.
 
 ```b4x
-' B4X — create the instance, then register it
+' B4X
 Dim p2 As Page2       ' Page2 is a class module implementing the page
 p2.Initialize
-B4XPages.AddPage("Page2", p2)
-B4XPages.ShowPage("Page2")
 
-' Or in one call:
-B4XPages.AddPageAndCreate("Page2", Page2)   ' where Page2 here is a fresh instance you dim/pass
+B4XPages.AddPage("Page2", p2)            ' created lazily, on first ShowPage
+' or
+B4XPages.AddPageAndCreate("Page2", p2)   ' B4XPage_Created runs now
+
+B4XPages.ShowPage("Page2")
 ```
 
 Common API:
@@ -79,9 +81,10 @@ End Sub
 
 ## Visual Designer & Anchors (preferred over code-built UI)
 
-Roughly 80% of B4X UI is built in the **Visual Designer**: you create a layout file, add
-views, and set **Anchors** + a **Designer Script** so one layout adapts to all screen
-sizes. Do **not** build static UI in code.
+Most B4X UI is built in the **Visual Designer**: you create a layout file, add views, and
+set **Anchors** + a **Designer Script** so one layout adapts to all screen sizes. Static
+UI built in code is the exception, not the default — see the carve-outs in
+`common-mistakes.md`.
 
 - Load a layout with `panel.LoadLayout("LayoutName")`.
 - Use **Anchors** (Left/Right/Top/Bottom/HorizontalCenter/VerticalCenter) instead of

@@ -113,8 +113,8 @@ the version-gated things worth knowing; the floor versions are fixed historical 
 
 | Feature | Needs | Fallback on older IDEs |
 |---------|-------|------------------------|
-| `Initialized()` / `NotInitialized()` | B4A 13.3+ | `If m <> Null And m.IsInitialized Then` |
-| B4XCollections helpers (`CreateList`, `EmptyList`, `EmptyMap`, `MergeLists`, `MergeMaps`, `CopyOnWriteList`, `CopyOnWriteMap`) internal | B4A 13.3+ | add the B4XCollections library manually, or `Dim l As List : l.Initialize : l.AddAll(...)` |
+| `Initialized()` / `NotInitialized()` | B4A 13.3+ / **B4J 10.2+ / B4i 8.90+** | `If m <> Null And m.IsInitialized Then` |
+| B4XCollections helpers (`CreateList`, `EmptyList`, `EmptyMap`, `MergeLists`, `MergeMaps`, `CopyOnWriteList`, `CopyOnWriteMap`) internal | B4A 13.3+ / **B4J 10.2+ / B4i 8.90+** | add the B4XCollections library manually, or `Dim l As List : l.Initialize : l.AddAll(...)` |
 | `#Macro` attribute | B4A 13.3+ | — |
 | `List.SubList` | B4A 13.5+ | copy into a new list |
 | Omitting the Starter service **without changing unhandled-exception behaviour**, `Application_Error` in Main | B4A 13.5+ | keep the Starter service and put `Application_Error` there |
@@ -124,6 +124,10 @@ the version-gated things worth knowing; the floor versions are fixed historical 
 | `ThrowException(Message)`, `Exception.StackTrace` | B4A 13.7+ | raise via a runtime error; log `LastException` without the trace |
 | `targetSdkVersion 34` toolchain (needs Java 19) | B4A 13.0+ | — |
 | **B4XPages itself** | B4A 10.0 / B4J 8.50 / B4i 6.80 | legacy Activities (B4A) — but recommend upgrading instead |
+
+**In shared code the floor is the highest of the three**, not B4A's. A feature that
+arrived in all three IDEs at once still needs each platform's own version number, because
+a project can sit on an older B4J or B4i while B4A is current.
 
 When the target version is unknown and a gated feature would materially change the
 answer, ask — or generate the fallback, which compiles everywhere.

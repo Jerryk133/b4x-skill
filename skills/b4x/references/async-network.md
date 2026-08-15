@@ -17,7 +17,10 @@ Next
 
 ## Wait For
 
-`Wait For` suspends until a named event fires. **Always add the Sender filter** —
+`Wait For` suspends until a named event fires. **Add the Sender filter whenever more than
+one object can raise that event** — which is most of the time, but not all: some events
+(a page's permission result, for instance) have no meaningful sender to filter on. The
+rule is driven by collision risk, not applied blindly —
 `Wait For (senderObject) EventName(...)` — so that concurrent operations don't resume the
 wrong sub.
 

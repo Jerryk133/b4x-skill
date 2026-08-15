@@ -17,6 +17,64 @@ interface is what it tells you about B4X, not how its own files are arranged.
 
 ## [Unreleased]
 
+## [1.6.0] — 2026-08-15
+
+Acts on an external audit. Every finding below was re-verified against the
+installed libraries or the official sources before being acted on.
+
+**If you copied shared code from 1.5.0, re-check it**: three fixes here reclassify
+code that was presented as cross-platform but is not.
+
+### Fixed
+
+- **A B4J server sharing one `SQL` object across multithreaded handlers.** The
+  third argument of `AddHandler` is *"whether this handler should always run in
+  the main thread"*, so the `False` in `platform-b4j.md` meant worker threads,
+  while `data-and-io.md` said to keep the database in `Main.Process_Globals`.
+  Neither file was wrong alone; together they produced concurrent use of a single
+  connection, which corrupts behaviour with no compile error. `platform-b4j.md`
+  now uses `ConnectionPool` with a connection taken and closed per request and
+  documents both values of the flag, and `data-and-io.md` carries the exception
+  to its own rule.
+- **`CSBuilder` presented as cross-platform.** The type does not exist in B4J —
+  swapping `Typeface` for the XUI font factories makes the font portable, not
+  `CSBuilder`. Relabelled B4A/B4i, with `BCTextEngine` / `BBLabel` named for B4J.
+- **`ThrowException` and `Exception.StackTrace` labelled `' B4X`.** Both are B4A
+  Core additions and absent from B4J; the block even contradicted itself with an
+  inline "B4A 13.7+" note. Split into a genuinely cross-platform
+  `Try`/`Catch`/`LastException.Message` example and a B4A-only one, with the
+  `#If B4A` form for shared code.
+- **B4i orientation attribute.** `#SupportedOrientations: 2` is B4A's form.
+  B4i uses `#iPhoneOrientations` and `#iPadOrientations` with named values.
+- **Google Play tense.** The API 36 requirement was written as already in force;
+  31 August 2026 is still ahead. Now stated as a future date, with the per-device
+  thresholds and the extension to 1 November 2026.
+- **`#Region` described as setting the B4J app type.** It only folds a block in
+  the editor; the type comes from creating a Non-UI project.
+- **Pseudo-code in a copyable block.** `req.InputStream ...` is now a working
+  `TextReader.Initialize2` read of the request body.
+- `AddPageAndCreate` was described as constructing the page. Both it and
+  `AddPage` take an instance you already initialized; they differ in when
+  `B4XPage_Created` runs.
+- README credited "Working Style guidance" for a section that does not exist.
+
+### Added
+
+- Threading section in `platform-b4j.md`: what each value of the `AddHandler`
+  flag means and which database access each one permits.
+- B4J 10.2 and B4i 8.90 floors alongside B4A 13.3 for `Initialized()` and the
+  B4XCollections helpers, with the rule that shared code takes the highest of the
+  three.
+- A caveat in `bundled-libraries.md` that the list was checked against a B4A
+  install and availability is per platform and per IDE version.
+
+### Changed
+
+- Softened rules the skill's own section on over-absolute guidance contradicted:
+  "Always add the Sender filter" is now driven by collision risk, B4XPages is the
+  default rather than "mandatory", and the unsourced "roughly 80% of B4X UI"
+  quantification is gone.
+
 ## [1.5.0] — 2026-08-10
 
 Reported from practice: generated projects kept failing to compile because a
@@ -223,7 +281,8 @@ which Google Play has required for new apps and updates since 31 August 2026.
   mistakes.
 - Claude Code plugin and marketplace manifests.
 
-[Unreleased]: https://github.com/Jerryk133/b4x-skill/compare/v1.5.0...HEAD
+[Unreleased]: https://github.com/Jerryk133/b4x-skill/compare/v1.6.0...HEAD
+[1.6.0]: https://github.com/Jerryk133/b4x-skill/compare/v1.5.0...v1.6.0
 [1.5.0]: https://github.com/Jerryk133/b4x-skill/compare/v1.4.0...v1.5.0
 [1.4.0]: https://github.com/Jerryk133/b4x-skill/compare/v1.3.1...v1.4.0
 [1.3.1]: https://github.com/Jerryk133/b4x-skill/compare/v1.3.0...v1.3.1
