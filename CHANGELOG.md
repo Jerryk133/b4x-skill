@@ -17,6 +17,35 @@ interface is what it tells you about B4X, not how its own files are arranged.
 
 ## [Unreleased]
 
+## [1.7.0] — 2026-08-15
+
+The last open audit finding: nothing checked what the skill *says*. Every serious
+defect so far passed the structural validator.
+
+### Added
+
+- `evals/content-checks.mjs`, run in CI after the validator. Enforces platform
+  purity — no code block labelled `' B4X` may name a single-platform type, with
+  `#If B4A … #End If` exempt, since that guard is how shared code is supposed to
+  reach a platform API. It would have caught the `CSBuilder` and `ThrowException`
+  mislabels.
+- Eleven regression assertions in the same file, one per bug that has shipped,
+  each tagged with the version that fixed it and the reason it matters. Verified
+  by reintroducing three of the original defects, each of which failed the run.
+- `evals/cases.md`: eight behavioural cases graded by reading rather than string
+  matching, since asserting exact output would only teach one phrasing. Each
+  descends from a real defect. Case 8 asks directly for a member that does not
+  exist, which is the failure mode the skill exists to prevent.
+- `evals/README.md` on why there are two layers and when to run each, including
+  that API resolution needs a local B4X install and reports itself skipped rather
+  than passing quietly.
+
+### Changed
+
+- The validator's README check now accepts any `.md` that exists anywhere in the
+  repo, not only under `references/`, so documentation outside the skill does not
+  register as a stale reference.
+
 ## [1.6.0] — 2026-08-15
 
 Acts on an external audit. Every finding below was re-verified against the
@@ -281,7 +310,8 @@ which Google Play has required for new apps and updates since 31 August 2026.
   mistakes.
 - Claude Code plugin and marketplace manifests.
 
-[Unreleased]: https://github.com/Jerryk133/b4x-skill/compare/v1.6.0...HEAD
+[Unreleased]: https://github.com/Jerryk133/b4x-skill/compare/v1.7.0...HEAD
+[1.7.0]: https://github.com/Jerryk133/b4x-skill/compare/v1.6.0...v1.7.0
 [1.6.0]: https://github.com/Jerryk133/b4x-skill/compare/v1.5.0...v1.6.0
 [1.5.0]: https://github.com/Jerryk133/b4x-skill/compare/v1.4.0...v1.5.0
 [1.4.0]: https://github.com/Jerryk133/b4x-skill/compare/v1.3.1...v1.4.0

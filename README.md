@@ -153,6 +153,10 @@ b4x-skill/
 ├── .github/
 │   └── workflows/
 │       └── validate.yml
+├── evals/
+│   ├── README.md
+│   ├── cases.md
+│   └── content-checks.mjs
 ├── scripts/
 │   └── validate.mjs
 ├── skills/
@@ -214,6 +218,18 @@ file named in `SKILL.md` must exist, every file on disk must be routed to from
 `SKILL.md`, backticked cross-file mentions must resolve, and the README reference
 list must match the files that are actually there. Renaming or deleting a
 reference file without updating its routing fails the build.
+
+That validator checks structure only — it cannot tell you a claim is wrong. The
+content checks in [evals/](evals/README.md) do that, and also run in CI:
+
+```bash
+node evals/content-checks.mjs
+```
+
+They enforce that no block labelled `' B4X` names a single-platform type, and
+carry one regression assertion per bug that has shipped. `evals/cases.md` holds
+the behavioural cases — prompts graded by reading, run before a release that
+changes guidance.
 
 After editing plugin files, run:
 

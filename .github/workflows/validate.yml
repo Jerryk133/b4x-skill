@@ -16,3 +16,5 @@ jobs:
           node-version: "20"
       - name: Validate skill and plugin metadata
         run: node scripts/validate.mjs
+      - name: Content checks
+        run: node evals/content-checks.mjs

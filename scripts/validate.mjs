@@ -264,7 +264,19 @@ function checkReadme(refs) {
     return;
   }
   const text = read(path);
+
+  // Any .md that exists anywhere in the repo is a legitimate mention; only names
+  // matching nothing on disk are stale. Scoping this to references/ would flag
+  // every doc added elsewhere, e.g. under evals/.
   const known = new Set([...refs, "README.md", "SKILL.md", "changelog.md"]);
+  (function collect(d) {
+    for (const e of readdirSync(d)) {
+      if (e === ".git" || e === "node_modules") continue;
+      const p = join(d, e);
+      if (statSync(p).isDirectory()) collect(p);
+      else if (e.endsWith(".md")) known.add(e.toLowerCase());
+    }
+  })(ROOT);
 
   for (const f of refs)
     if (!text.includes(f))
@@ -272,7 +284,7 @@ function checkReadme(refs) {
 
   const mentioned = new Set([...text.matchAll(/([a-z0-9-]+\.md)/g)].map((m) => m[1]));
   for (const f of mentioned)
-    if (!known.has(f))
+    if (!known.has(f) && !known.has(f.toLowerCase()))
       fail("README.md", `mentions \`${f}\`, which no longer exists`);
 }
 
